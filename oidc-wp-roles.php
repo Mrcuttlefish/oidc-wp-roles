@@ -5,6 +5,9 @@ Plugin URI: TBD
 Description:
 Author: daggerhart
 Version: 1.0
+Requires at least: 6.0
+Tested up to: 6.8
+Requires PHP: 7.4
 Author URI: https://www.daggerhartlab.com
 Text Domain: oidc-wp-roles
 */
@@ -22,6 +25,10 @@ if ( file_exists( __DIR__ . "/vendor/autoload.php" ) ) {
  */
 register_activation_hook(__FILE__, 'oidc_wp_roles_install');
 function oidc_wp_roles_install() {
+	if ( ! file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+		return;
+	}
+
 	require_once __DIR__ . "/vendor/autoload.php";
 	$handler = \OidcRoles\Service\LoggerFactory::getDefaultHandler();
 	$handler->initialize(['extra' => []]);
@@ -32,6 +39,10 @@ function oidc_wp_roles_install() {
  */
 register_uninstall_hook(__FILE__, 'oidc_wp_roles_uninstall');
 function oidc_wp_roles_uninstall() {
+	if ( ! file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+		return;
+	}
+
 	require_once __DIR__ . "/vendor/autoload.php";
 	$handler = \OidcRoles\Service\LoggerFactory::getDefaultHandler();
 	$handler->uninitialize();

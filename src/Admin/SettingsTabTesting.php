@@ -89,18 +89,31 @@ class SettingsTabTesting extends SettingsTabBase {
 
 		$data = \json_decode( $settings['response_data'], TRUE );
 		$user = wp_get_current_user();
-		if ( !empty( $settings['user'] ) ) {
-			$user = is_numeric( $settings['user'] ) ?
+		if ( ! empty( $settings['user'] ) ) {
+			$test_user = is_numeric( $settings['user'] ) ?
 				get_user_by( 'id', (int) $settings['user'] ) :
 				get_user_by( 'email', $settings['user'] );
+			if ( $test_user instanceof \WP_User ) {
+				$user = $test_user;
+			}
+		}
+
+		if ( $user instanceof \WP_User ) {
 			$meta = \get_user_meta( $user->ID, "oidc_wp_roles--connection-response--{$settings['connection']}", TRUE );
-			if (!empty($meta)) {
+			if ( ! empty( $meta ) ) {
 				$data = $meta;
 			}
 		}
 
 		$this->mappingsManager->setUser( $user );
 		$collections = $this->mappingsManager->getConnectionClientMappingCollections();
+		if ( empty( $settings['connection'] ) || ! isset( $collections[ $settings['connection'] ] ) ) {
+			$this->setMessage( [
+				'text' => __( 'Please select a valid connection.', 'oidc-wp-roles' ),
+				'type' => 'error',
+			] );
+			return;
+		}
 		$collection = $collections[ $settings['connection'] ];
 
 		$role_mapping_results = $this->mappingsManager->getMappingsResults( $data, $collection->getRoleMappings() );
