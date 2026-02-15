@@ -122,6 +122,10 @@ class Plugin {
 	 *   Current page identifier provided by WP.
 	 */
 	public function adminEnqueueScripts( $current_page ) {
+		if ( ! \is_string( $current_page ) ) {
+			return;
+		}
+
 		if( false === \strpos( $current_page, 'oidc_wp_roles' ) ) {
 			return;
 		}

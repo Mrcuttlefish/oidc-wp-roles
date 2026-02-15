@@ -90,8 +90,8 @@ class SettingsTabGeneral extends SettingsTabBase {
 	 * @return string
 	 *   Sanitized value.
 	 */
-	public function sanitizeText( string $value ) {
-		return sanitize_text_field( trim( $value ) );
+	public function sanitizeText( $value ) {
+		return sanitize_text_field( trim( (string) $value ) );
 	}
 
 }

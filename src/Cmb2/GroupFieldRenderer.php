@@ -39,9 +39,11 @@ class GroupFieldRenderer {
 	 * @return mixed|null
 	 */
 	public function __get( string $name ) {
-		if ( $this->cmb2->{$name} ) {
+		if ( isset( $this->cmb2->{$name} ) || \property_exists( $this->cmb2, $name ) ) {
 			return $this->cmb2->{$name};
 		}
+
+		return null;
 	}
 
 	/**

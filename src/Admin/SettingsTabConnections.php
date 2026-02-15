@@ -143,7 +143,7 @@ class SettingsTabConnections extends SettingsTabBase {
 	 * @return array|string|string[]
 	 */
 	public function sanitizeRequestUrl( $values ) {
-		return str_replace( '&amp;', '&', $values );
+		return str_replace( '&amp;', '&', (string) $values );
 	}
 
 }
