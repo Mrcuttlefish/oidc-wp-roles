@@ -53,10 +53,12 @@ class RoleSettingsUpdate {
 	 * @param string $option_name
 	 */
 	public function updateRoles( $old_values, $values, $option_name ) {
-		$old_roles = $old_values['roles'];
-		$old_role_slugs = array_column( $old_values['roles'], 'slug' );
-		$saved_roles = $values['roles'];
-		$saved_role_slugs = array_column( $values['roles'], 'slug' );
+		$old_values = is_array( $old_values ) ? $old_values : [];
+		$values = is_array( $values ) ? $values : [];
+		$old_roles = isset( $old_values['roles'] ) && is_array( $old_values['roles'] ) ? $old_values['roles'] : [];
+		$saved_roles = isset( $values['roles'] ) && is_array( $values['roles'] ) ? $values['roles'] : [];
+		$old_role_slugs = array_column( $old_roles, 'slug' );
+		$saved_role_slugs = array_column( $saved_roles, 'slug' );
 		$new_roles = [];
 		$deleted_roles = [];
 		$updated_roles = [];
