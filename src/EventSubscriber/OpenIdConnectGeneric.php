@@ -37,7 +37,8 @@ class OpenIdConnectGeneric {
 	public static function register( SettingsInterface $general_settings ) {
 		$self = new self( $general_settings );
 
-		if ( ! empty( trim( $general_settings->get( 'login_button_text' ) ) ) ) {
+		$login_button_text = trim( (string) $general_settings->get( 'login_button_text', '' ) );
+		if ( '' !== $login_button_text ) {
 			add_filter( 'openid-connect-generic-login-button-text', [ $self, 'loginbuttonText' ] );
 		}
 	}

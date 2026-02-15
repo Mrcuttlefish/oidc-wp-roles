@@ -5,6 +5,9 @@ Plugin URI: TBD
 Description:
 Author: daggerhart
 Version: 1.0
+Requires at least: 6.0
+Tested up to: 6.8
+Requires PHP: 7.2
 Author URI: https://www.daggerhartlab.com
 Text Domain: oidc-wp-roles
 */
@@ -15,6 +18,15 @@ define( 'OIDC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 if ( file_exists( __DIR__ . "/vendor/autoload.php" ) ) {
     require_once __DIR__ . "/vendor/autoload.php";
     \OidcRoles\Plugin::bootstrap();
+}
+
+add_action( 'plugins_loaded', 'oidc_wp_roles_load_textdomain' );
+
+/**
+ * Load plugin translations.
+ */
+function oidc_wp_roles_load_textdomain() {
+	load_plugin_textdomain( 'oidc-wp-roles', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }
 
 /**

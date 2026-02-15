@@ -272,7 +272,7 @@ class SettingsTabRoleMapping extends SettingsTabBase {
 	 *   Sanitized value to be stored.
 	 */
 	public function sanitizeRoleNames( $values, $field_args, $field ) {
-		return \sanitize_text_field( \trim( $values ) );
+		return \sanitize_text_field( \trim( (string) $values ) );
 	}
 	/**
 	 * Get an array of connection names.

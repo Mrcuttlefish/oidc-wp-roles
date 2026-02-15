@@ -28,7 +28,8 @@ class Settings implements SettingsInterface {
 	 */
 	public function __construct( string $option_name ) {
 		$this->optionName = $option_name;
-		$this->values = \get_option( $option_name, [] );
+		$settings = \get_option( $option_name, [] );
+		$this->values = \is_array( $settings ) ? $settings : [];
 	}
 
 	/**
